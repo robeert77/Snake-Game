@@ -1,7 +1,8 @@
-let moveDirection = ['right', true];
+let moveDirection = ['ArrowRight', true];
 let snakePositions = new Array(); // positions 0 will be always the head of snake
 let foodPositions = new Array();
 let playing, score = 0;
+let headMovement = {ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1]};
 
 // called when the page is loaded and generates the grid
 window.addEventListener('load', function() {
@@ -43,18 +44,7 @@ function startGame() {
 
 // called when a key is down, I use it to change direction for snake
 window.addEventListener('keydown', function(event) {
-    if (event.key == 'ArrowUp' && moveDirection[0] != 'down' && moveDirection[1]) {// move up
-        moveDirection = ['up', false];
-    }
-    else if (event.key == 'ArrowDown' && moveDirection[0] != 'up' && moveDirection[1]) { // move down
-        moveDirection = ['down', false];
-    }
-    else if (event.key == 'ArrowLeft' && moveDirection[0] != 'right' && moveDirection[1]) { // move left
-        moveDirection = ['left', false];
-    }
-    else if (event.key == 'ArrowRight' && moveDirection[0] != 'left' && moveDirection[1]) { // move right
-        moveDirection = ['right', false];
-    }
+    moveDirection = [event.key, false];
 });
 
 // check if a cell is part or not of the snake. This check starts from startPosition and check the rest of the tail
@@ -111,20 +101,10 @@ function moveTail() {
 function moveHead() {
     moveTail();
     let nextHead = snakePositions[0];
-    if (moveDirection[0] == 'up') {
-        nextHead[0]--;
-    }
-    else if (moveDirection[0] == 'down') {
-        nextHead[0]++;
-    }
-    else if (moveDirection[0] == 'left') {
-        nextHead[1]--;
-    }
-    else {
-        nextHead[1]++;
-    }
+    nextHead[0] += headMovement[moveDirection[0]][0];
+    nextHead[1] += headMovement[moveDirection[0]][1];
     moveDirection[1] = true;
     if (checkHead(nextHead)) {
-        $('#' + snakePositions[0][0] + '-' + snakePositions[0][1]).addClass('bg-dark');
+        $('#' + nextHead[0] + '-' + nextHead[1]).addClass('bg-dark');
     }
 }
