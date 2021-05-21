@@ -1,5 +1,5 @@
 let moveDirection = ['ArrowRight', true];
-let snakePositions = new Array(); // positions 0 will be always the head of snake
+let snakePositions = []; // positions 0 will be always the head of snake
 let foodPositions = new Array();
 let playing, score = 0;
 let headMovement = {ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1]};
@@ -44,7 +44,9 @@ function startGame() {
 
 // called when a key is down, I use it to change direction for snake
 window.addEventListener('keydown', function(event) {
-    moveDirection = [event.key, false];
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        moveDirection = [event.key, false];
+    }
 });
 
 // check if a cell is part or not of the snake. This check starts from startPosition and check the rest of the tail
