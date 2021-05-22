@@ -83,7 +83,7 @@ function checkHead(nextHead) {
         $('#' + foodPositions[0] + '-' + foodPositions[1]).removeClass('bg-danger');
         score += 5;
         generateFood();
-        snakePositions.push([0, 0]);
+        snakePositions.push([]);
     }
     snakePositions[0] = nextHead;
     return true;
