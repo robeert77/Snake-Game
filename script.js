@@ -69,9 +69,14 @@ function generateFood() {
     $('#textInformation').text('Score: ' + score);
 }
 
+// check if the game is over, out of the grid or hot himself
+function gameOver(nextHead) {
+    return (nextHead[0] < 0 || nextHead[1] < 0 || nextHead[0] >= 20 || nextHead[1] >= 30 || isOnSnake(nextHead, 1));
+}
+
 // check the head of the snake
 function checkHead(nextHead) {
-    if (nextHead[0] < 0 || nextHead[1] < 0 || nextHead[0] >= 20 || nextHead[1] >= 30 || isOnSnake(nextHead, 1)) { // the head is out of the grid or is on his tail
+    if (gameOver(nextHead)) { // the head is out of the grid or is on his tail
         clearInterval(playing);
         $('#textInformation').text('Game Over!');
         $('#gameController').prop('disabled', false);
